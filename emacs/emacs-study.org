@@ -94,18 +94,21 @@ Putty相对于其他终端工具运行emacs则更加优秀
 #+END_VERSE
 
 ** 安装putty
-#+BEGIN_VERSE
+#+BEGIN_EXAMPLE
+
 官网 https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html 下载便携版，直接解压就可以使用
 
 最新版本为0.7
-#+END_VERSE
+
+#+END_EXAMPLE
 
 ** 配置putty主题
-#+BEGIN_VERSE
+#+BEGIN_EXAMPLE
 
 导入putty的颜色主题，igvita-desert.reg 和 igvita-light.reg，双击*.reg文件即可。
 
-#+END_VERSE
+#+END_EXAMPLE
+
 
 
 * spacemacs安装
