@@ -1,0 +1,148 @@
+#+TITLE: Firefox-Study历程
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../style/my-org-worg.css"/>
+
+*** 安装
+
+#+BEGIN_EXAMPLE
+选择 自定义安装模式(Custom) -> 开发工具 -> 工具扩展
+
+1 JavaScript Debugger
+
+2 Console Filter
+
+3 Component Viewer : XPCOM 组件查看器
+
+4 Extension Developer : 辅助开发扩展的扩展
+#+END_EXAMPLE
+
+
+*** Profile目录
+
+#+BEGIN_EXAMPLE
+最后的插件都是放在 %profile% 目录下
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+Firefox:
+可以从C:\Users\lescpsn\AppData\Roaming\Mozilla\Firefox\profiles.ini文件中查看
+C:\Users\lescpsn\AppData\Roaming\Mozilla\Firefox\Profiles\xxx
+
+TB:
+可以从C:\Users\lescpsn\AppData\Roaming\Thunderbird\profiles.ini文件中查看
+C:\Users\lescpsn\AppData\Roaming\Thunderbird\Profiles\xxx
+#+END_EXAMPLE
+
+
+#+BEGIN_EXAMPLE
+thunderbird.exe -P 建立一个自己独立的Profile目录
+
+指定以test的Profile启动thunderbird.exe
+
+set MOZ_NO_REMOTE=1
+thunderbird.exe -P test
+#+END_EXAMPLE
+
+
+*** 已安装的扩展
+#+BEGIN_EXAMPLE
+
+%profile%/extensions.ini保存已安装的扩展信息
+
+#+END_EXAMPLE
+
+
+*** 插件介绍
+**** KeySnail
++ KeySnail
+#+BEGIN_EXAMPLE
+注意：打开火狐选项，关闭掉多进程模式，否则一些快捷键失效
+https://github.com/mooz/keysnail.git 下载 keysnail.xpi 文件
+
+右键用火狐浏览器方式打开keysnail.xpi，基本默认安装就是
+
+安装完成后火狐浏览器的右上角会出现相关图标，可以点击打开插件管理，继续安装keysnail的相关插件
+
+或者
+wget https://github.com/mooz/keysnail/raw/master/keysnail.xpi
+
+firefox keysnail.xpi
+#+END_EXAMPLE
+
++ Hok
+#+BEGIN_EXAMPLE
+相关学习文档
+http://blog.cwchen.tw/firefox/2014/08/08/keysnail/
+http://blog.binchen.org/posts/use-firefox-in-emacs-way-3.html
+
+配置参考
+https://gist.githubusercontent.com/redguardtoo/003ac86d4c11b70b870a/raw/32356b071785248c0ff56d9c5896168263efefdd/.keysnail.js
+
+打开keysnail的插件管理，安装Hok，
+
+github上可以自行学习Hok的相关配置的用法
+
+首次启动firfox，在用户的家目录下自动新建一个~/.keysnail.js文件
+
+打开firfox选项，关闭掉火狐的多进程，否则一些快捷键失效。
+
+如果出现快捷键的冲突，如浏览器的放大和缩小快捷(C - +, C - -)，请修改下这个键
+key.negativeArgument1Key = "C-+";
+
+
+编辑~/.keysnail.js文件,具体可以查看官 方文档
+
+注意：以下配置项目最好放在.keysnail.js文件的最后，否则好像有冲突
+(关闭掉多进程后可以不用编写以下配置了)
+
+key.setViewKey('e', function (aEvent, aArg) {
+    ext.exec("hok-start-foreground-mode", aArg);
+}, 'Hok - Foreground hint mode', true);
+
+key.setViewKey('E', function (aEvent, aArg) {
+    ext.exec("hok-start-background-mode", aArg);
+}, 'HoK - Background hint mode', true);
+
+key.setViewKey(';', function (aEvent, aArg) {
+    ext.exec("hok-start-extended-mode", aArg);
+}, 'HoK - Extented hint mode', true);
+
+key.setViewKey(['C-c', 'C-e'], function (aEvent, aArg) {
+    ext.exec("hok-start-continuous-mode", aArg);
+}, 'Start continuous HaH', true);
+
+key.setViewKey('c', function (aEvent, aArg) {
+    ext.exec("hok-yank-foreground-mode", aArg);
+}, 'Hok - Foreground yank hint mode', true);
+
+#+END_EXAMPLE
+
++ emacs相关插件
+#+BEGIN_EXAMPLE
+目录一个Hok基本够用了，已经可以让你的火狐操作如虎添翼的，以下插件后续继续研究
+
+Caret hint，Tanything，bmany
+#+END_EXAMPLE
+
+
+*** 常用快捷键
+#+BEGIN_EXAMPLE
+快捷键缩写说明：C->Ctrl，S->Shift，D->Delete
+#+END_EXAMPLE
+
++清除各种缓存的快捷键
+#+BEGIN_EXAMPLE
+C + S + D
+#+END_EXAMPLE
+
+
+*** 插件开发
+#+BEGIN_EXAMPLE
+https://www.cnblogs.com/jxsoft/archive/2011/04/07/2008175.html
+#+END_EXAMPLE
+
+
+*** study website
+#+BEGIN_EXAMPLE
+https://github.com/Bozar/daily_scripts/blob/daily/.keysnail.js
+#+END_EXAMPLE

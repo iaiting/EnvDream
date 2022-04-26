@@ -1,0 +1,487 @@
+#+TITLE: vscode-study历程
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../style/my-org-worg.css"/>
+
+** vscode安装
+*** Windows
++ 主程序安装
+#+BEGIN_EXAMPLE
+官网下载对应平台的最新安装包，设置好安装路径 ->
+
+不创建开始菜单文件 -> 将Code注册为受支持的文件类型(不选，其它都选) ->
+
+一路回车法
+#+END_EXAMPLE
+
++ 卸载
+#+BEGIN_EXAMPLE
+正常卸载完程序后，vscode的一些配置信息仍然保留在系统中，
+
+可以自行选择保留或彻底删除
+
+插件路径：
+C:\Users\lescpsn\.vscode
+
+个人配置路径
+C:\Users\lescpsn\AppData\Roaming\Code
+#+END_EXAMPLE
+
+
+*** Mac
+
+*** Linux
+
+
+** 全局插件
++ (Chinese (Simplified) Language Pack for Visual Studio Code)
+#+BEGIN_EXAMPLE
+简体中文汉化插件包
+#+END_EXAMPLE
+
+
++ Org Mode
+#+BEGIN_EXAMPLE
+查看编辑 org-mode 类型文档
+#+END_EXAMPLE
+
+
++ JSON Tools (windows)
+#+BEGIN_EXAMPLE
+Ctrl-Alt-m : 格式化josn
+
+Alt-m : 最小化josn
+#+END_EXAMPLE
+
++ Prettify JSON (mac)
+#+BEGIN_EXAMPLE
+Ctrl-Alt-m : 格式化josn
+
+Alt-m : 最小化josn
+#+END_EXAMPLE
+
++ mql4语言
+#+BEGIN_EXAMPLE
+安装 MQL4 Syntax Highlighting
+#+END_EXAMPLE
+
++ 16进制显示
+#+BEGIN_EXAMPLE
+安装 vscode-hexdump
+#+END_EXAMPLE
+
++ changeEncode
+#+BEGIN_EXAMPLE
+显示非utf8的中文编码文件
+支持utf-8，gbk中文编码文件自动识别转换
+#+END_EXAMPLE
+
++ 颜色主题插件
+#+BEGIN_EXAMPLE
+安装 One Dark Pro
+#+END_EXAMPLE
+
+
++ 文件类型icons
+#+BEGIN_EXAMPLE
+安装 VSCode Great Icons
+
+安装 vscode-icons
+
+文件 -> 首选项 -> 文件图标主题 -> 选择一个已安装且自己喜欢的
+#+END_EXAMPLE
+
++ 未研究的插件
+#+BEGIN_EXAMPLE
+Project-manage
+Emacs-Keymap bug比较多
+#+END_EXAMPLE
+
+
+
+
+** 全局配置
+
+*** 常用配置
+#+BEGIN_EXAMPLE
+
+// 自动识别文件编码，支持gbk,utf-8各种文件的中文编码自动识别，无须再安装其他插件
+"files.autoGuessEncoding": true,
+
+// 控制编辑器中呈现空白字符的方式，可能为“无”、“边界”和“全部”。“边界”选项不会在单词之间呈现单空格。
+"editor.renderWhitespace": "all",
+
+// 启用后，将在保存文件时剪裁尾随空格。
+"files.trimTrailingWhitespace": true,
+
+// 禁止控制编辑器是否应该在左括号后自动插入右括号
+"editor.autoClosingBrackets": never,
+
+// 每行第80，120个字符的位置提示线
+"editor.rulers": [80,120],
+
+// 隐藏右侧小地图
+"editor.minimap.enabled": false,
+
+#+END_EXAMPLE
+
+
+*** 定义快捷键盘
++ 快捷键自定义的配置文件
+#+BEGIN_EXAMPLE
+C:\Users\lescpsn\AppData\Roaming\code\User\keybindings.json
+#+END_EXAMPLE
+
+
+#+BEGIN_EXAMPLE
+文件 ->首选项 ->键盘快捷方式(C-k C-s 打开搜索键绑定)
+#+END_EXAMPLE
+
++ 自定义转换成大写
+#+BEGIN_EXAMPLE
+搜索键绑定 -> 输入大写 -> C-k C-u
+#+END_EXAMPLE
+
++ 自定义转换成小写
+#+BEGIN_EXAMPLE
+搜索键绑定 -> 输入小写 -> C-k C-l
+#+END_EXAMPLE
+
++ 代码提示时用Ctrl+p和Ctrl+n上下选择
+#+BEGIN_EXAMPLE
+搜索键绑定 -> 搜索selectNextSuggestion -> C-DownArrow 改成 C-n
+
+搜索键绑定 -> 搜索selectPrevSuggestion -> C-UpArrow 改成 C-p
+#+END_EXAMPLE
+
++ 代码提示激活Ctrl+space更改c + s + i
+#+BEGIN_EXAMPLE
+搜索键绑定 -> 搜索suggest
+
+"key": "ctrl+space", （更改成c + s + i）
+"command": "editor.action.triggerSuggest",
+"when": "editorHasCompletionItemProvider && editorTextFocus && !editorReadonly"
+
+"key": "ctrl+space", （更改成c + s + i）
+"command": "toggleSuggestionDetails",
+"when": "editorTextFocus && suggestWidgetVisible"
+
+"key": "ctrl+alt+space",（暂且未修改）
+"command": "toggleSuggestionFocus",
+"when": "editorTextFocus && suggestWidgetVisible"
+#+END_EXAMPLE
+
+
++ 移动到下一行该成Ctrl+n （暂且不要修改，影响比较大）
+#+BEGIN_EXAMPLE
+1 将原生的 ctrl+n "workbench.action.files.newUntitledFile" 新建无标题文件
+  修改为"ctrl+k ctrl+n",
+
+2 将原生的 "down","cursorDown" 光标向下移动一行
+  添加一个 "ctrl+n","cursorDown" 光标向下移动一行
+#+END_EXAMPLE
+
++ 移动到上一行该成Ctrl+p （暂且不要修改，影响比较大）
+#+BEGIN_EXAMPLE
+1 将原生的ctrl+p "workbench.action.quickOpen" "workbench.action.quickOpenNavigateNextInFilePicker" 两个
+  修改为"ctrl+k ctrl+f",
+
+
+2 将原生的 "up","cursorUp" 光标向上移动一行
+  添加一个 "ctrl+p","cursorUp" 光标向上移动一行
+
+#+END_EXAMPLE
+
+
+
+
+
+** IDE For Golang
+
++ golang语言插件
+#+BEGIN_EXAMPLE
+安装 Go (Rich go language support for Visual Studio Code 插件)
+#+END_EXAMPLE
+
++ msys2交叉环境
+#+BEGIN_EXAMPLE
+非常重要：
+采用msys2交叉编译环境，应该选用和windows的golang一样的版本
+否则后续安装的程序，很多不起作用
+#+END_EXAMPLE
+
++ 安装gopkgs
+#+BEGIN_EXAMPLE
+老版：
+go get -u -v -x github.com/tpng/gopkgs
+新版：
+go get -u -v -x github.com/uudashr/gopkgs/cmd/gopkgs
+#+END_EXAMPLE
+
++ 安装gocode
+#+BEGIN_EXAMPLE
+代码补全
+go get -u -v -x github.com/nsf/gocode
+#+END_EXAMPLE
+
++ 安装godef
+#+BEGIN_EXAMPLE
+代码跳转
+go get -u -v -x github.com/rogpeppe/godef
+#+END_EXAMPLE
+
++ golang.org/x/tools的安装
+#+BEGIN_EXAMPLE
+github.com/golang 等价于 golang.org/x
+
+Windows:
+md %GOPATH%\src\golang.org\x
+cd %GOPATH%\src\golang.org\x
+
+Linux:
+mkdir -p $GOPATH/src/golang.org/x
+cd $GOPATH/src/golang.org/x
+
+
+git clone http://github.com/golang/tools.git
+以后git pull 更新
+#+END_EXAMPLE
+
++ dlv调试器安装
+#+BEGIN_EXAMPLE
+go get -u -v -x github.com/derekparker/delve/cmd/dlv
+#+END_EXAMPLE
+
+
++ 安装go-outline
+#+BEGIN_EXAMPLE
+因为被墙了，需要事先从git的源下载好golang.org\x\tools
+详情见golang.org/x/tools的安装
+
+事先下载好tools后，可以不用-u
+go get -v -x github.com/ramya-rao-a/go-outline
+#+END_EXAMPLE
+
+
++ 安装delve
+#+BEGIN_EXAMPLE
+go get -u -v -x github.com/derekparker/delve/cmd/dlv
+cmd中运行。msys2交叉环境中执行可能会出问题
+#+END_EXAMPLE
+
++ golint安装
+#+BEGIN_EXAMPLE
+golint 需要用到 golang.org\x\tools包
+规范代码的，比如导出函数需要加注释
+go get -v -x github.com/golang/lint/golint
+#+END_EXAMPLE
+
++ 安装goreturns
+#+BEGIN_EXAMPLE
+格式化代码
+两种方式安装
+方式一：(-u好像失效)
+go get -u -v -x sourcegraph.com/sqs/goreturns
+go get - -v -x sourcegraph.com/sqs/goreturns
+
+
+方式二：
+mkdir -p $GOPATH/src/sourcegraph.com/sqs
+cd $GOPATH/src/sourcegraph.com/sqs
+git clone http://github.com/sqs/goreturns
+go install sourcegraph.com/sqs/goreturns
+
+
+方式三：
+go get -u -v -x github.com/sqs/goreturns
+go get -v -x github.com/sqs/goreturns
+#+END_EXAMPLE
+
++ 安装go-outline
+#+BEGIN_EXAMPLE
+go get -u -v -x github.com/lukehoban/go-outline
+#+END_EXAMPLE
+
+
+
+
++ 安装gometalinter
+#+BEGIN_EXAMPLE
+go get -u -v -x github.com/alecthomas/gometalinter
+#+END_EXAMPLE
+
++ 需要安装的模块
+#+BEGIN_EXAMPLE
+
+Installing github.com/acroca/go-symbols FAILED
+Installing golang.org/x/tools/cmd/guru FAILED
+Installing golang.org/x/tools/cmd/gorename FAILED
+Installing github.com/fatih/gomodifytags SUCCEEDED
+Installing github.com/haya14busa/goplay/cmd/goplay SUCCEEDED
+Installing github.com/josharian/impl FAILED
+Installing sourcegraph.com/sqs/goreturns FAILED
+Installing github.com/golang/lint/golint FAILED
+
+  goplay
+  impl
+  goreturns
+  golint
+  gotests
+  dlv
+#+END_EXAMPLE
+
+
+** IDE For Python
++ Python语言扩展安装
+#+BEGIN_EXAMPLE
+一般只要打开.py的文件，会自动提示安装python扩展
+
+选择Python(目前下载量最高)安装即可
+
+安装 Python
+#+END_EXAMPLE
+
++ 多环境Python
+#+BEGIN_EXAMPLE
+当采用Anaconda的conda方式部署多个Python环境时，请在vscode的左下角
+
+选择指定运行的python环境
+#+END_EXAMPLE
+
++ python依赖包安装
+
+#+BEGIN_EXAMPLE
+win + r -> cmd
+activate py364env  切换到指定的python环境
+
+语法检查
+pip install pylint (需要chcp 65001切换到utf-8编码环境)
+
+代码格式化
+pip install yapf
+#+END_EXAMPLE
+
+
+
+** IDE For C/C++
++ 安装相关插件
+#+BEGIN_EXAMPLE
+codecpp-mininum
+cpp精简版
+
+codecpp-full
+cpp全家桶
+#+END_EXAMPLE
+
++ 安装msys2
+#+BEGIN_EXAMPLE
+msys2提供了开发工具链
+#+END_EXAMPLE
+
++ 安装编译器(gcc 或者 clang)
+#+BEGIN_EXAMPLE
+gcc ：
+
+32位 : mingw-w64-i686-gcc (mingw-w64-i686-toolchain)
+       pacman -Sy mingw-w64-i686-toolchain 安装相关工具链
+
+
+64位 : mingw-w64-x86_64-gcc (mingw-w64-x86_64-toolchain)
+       pacman -Sy mingw-w64-x86_64-toolchain 安装相关工具链
+
+clang :
+32位 : mingw-w64-i686-clang
+       pacman -Sy mingw-w64-i686-clang
+
+64位 : mingw-w64-x86_64-clang
+       pacman -Sy mingw-w64-x86_64-clang
+
+#+END_EXAMPLE
+
+
++ 配置终端
+#+BEGIN_EXAMPLE
+
+设置终端为bash
+"terminal.integrated.shell.windows": "C:\\msys64\\usr\\bin\\bash.exe"
+
+// 在 Windows 终端上时使用的命令行参数，启动bash的启动参数, -i 表示启动bash后进入交互模式
+"terminal.integrated.shellArgs.windows": ["-i"],
+
+// 设置bash的环境变量 windows自身的环境暂且没有添加
+// /c/Windows/System32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowershell/v1.0/
+
+"terminal.integrated.env.windows": {"PATH" : "/mingw32/bin:/usr/bin"}
+#+END_EXAMPLE
+
++ 安装调试器
+#+BEGIN_EXAMPLE
+launch.json
+
+{
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "(gdb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "C:/Projects/iaiting/CDream/a.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:\\msys64\\mingw32\\bin\\gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}
+
+task.json 负责构建编译任务
+
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "-ggdb",
+                "-Wall",
+                "utils/main.c",
+                "-o",
+                "a.exe"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ]
+}
+
+
+#+END_EXAMPLE
+
+
+** issue
++ godef: no declaration found for net.ResolveTCPAddr
+#+BEGIN_EXAMPLE
+修改github.com\rogpeppe\godef\go\parser\parser.go中源代码,注释掉报错的这行
+//name, err := p.pathToName(litToString(path), filepath.Dir(filename))
+name, _ := p.pathToName(litToString(path), filepath.Dir(filename))
+
+//p.error(path.Pos(), fmt.Sprintf("cannot find identifier for package %q: %v", litToString(path), err))
+
+重新编译安装一下
+go install github.com/rogpeppe/godef
+#+END_EXAMPLE
+

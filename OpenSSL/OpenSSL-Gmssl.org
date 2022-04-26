@@ -1,0 +1,293 @@
+#+TITLE:  OpenSSL & GmSSL
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../style/my-org-worg.css"/>
+
+** 官网下载源码
+#+BEGIN_EXAMPLE
+git clone https://github.com/openssl/openssl.git OpenSSL
+
+或者
+git clone https://github.com/guanzhi/GmSSL.git GmSSL
+#+END_EXAMPLE
+
+
+
+
+** 编译
+
+
+*** Windows
+#+BEGIN_EXAMPLE
+windows下编译，master分支经常有问题，若master分支编译不通过，可以试试切换到一个稳定的分支下再编译
+如：OpenSSL
+git checkout -b OpenSSL_1_1_0-stable origin/OpenSSL_1_1_0-stable
+
+如：GmSSL
+git checkout -b GmSSL-v1 origin/GmSSL-v1
+
+#+END_EXAMPLE
+
+**** 安装vs
++ 下载vs
+#+BEGIN_EXAMPLE
+以vs2017做为编译环境
+
+官网https://www.visualstudio.com/downloads/下载vs2017的版本
+#+END_EXAMPLE
+
++ 安装
+#+BEGIN_EXAMPLE
+指定好安装目录 -> 自定义安装 -> 勾选VC++ -> 一路回车法
+#+END_EXAMPLE
+
++ 修改PATH环境变量(可选)
+#+BEGIN_EXAMPLE
+vs安装路径下的C:\Local\VisualStudioEnterprise2017\VC\bin\cl.exe即编译器, 相当于linux下的gcc
+
+将C:\Local\VisualStudioEnterprise2017\VC\bin路径添加到环境变量PATH中
+#+END_EXAMPLE
+
++ 添加INCLUDE环境变量(可选)
+#+BEGIN_EXAMPLE
+INCLUDE环境变量相当于头文件的搜索路径, 将
+
+C:\Local\VisualStudioEnterprise2017\VC\include
+
+C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include
+
+添加到环境变量INCLUDE中
+#+END_EXAMPLE
+
++ 添加LIB环境变量(可选)
+#+BEGIN_EXAMPLE
+LIB环境变量相当于库文件链接搜索路径, 将
+
+C:\Local\VisualStudioEnterprise2017\VC\lib
+
+C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib
+
+添加到环境变量LIB中
+#+END_EXAMPLE
+
+
+
+**** 安装perl
++ 下载
+#+BEGIN_EXAMPLE
+官网https://www.perl.org/get.html下载 ActiveState Perl 对应的系统版本(例如:64位)
+#+END_EXAMPLE
+
++ 安装及配置
+#+BEGIN_EXAMPLE
+选择custom方式 -> 指定好安装目录 -> 一路回车法
+#+END_EXAMPLE
+
++ 测试安装是否成功
+#+BEGIN_EXAMPLE
+where perl
+#+END_EXAMPLE
+
+
+
+**** 安装nasm(有些版本可能需要)
+#+BEGIN_EXAMPLE
+vs自带的汇编编译器，OpenSSL不支持，需要另外安装nasm汇编编译器
+
+官网 http://www.nasm.us/pub/nasm/releasebuilds/2.12.02/win64/
+
+下载对应的windows版本
+
+在openssl的1.1及其以上版本是不需要的，编译时直接nmake就可以了.
+
+网络上很多文章描述的编译时有一步ms\do_nasm过程, 其实已经过时了.
+
+GmSSL可能需要，安装完成后，将nasm加入到系统的PATH环境变量中
+#+END_EXAMPLE
+
++ 安装
+#+BEGIN_EXAMPLE
+指定好安装目录 -> 一路回车法, 之后将安装后的目录添加到环境变量PATH中去。
+#+END_EXAMPLE
+
+
+
+**** 编译
+#+BEGIN_EXAMPLE
+启动vs命令行编译环境，这步很重要, 设置编译的环境变量, 头文件, 动态库等
+win + r
+
+%comspec% /k ""C:\Local\VisualStudioEnterprise2017\Common7\Tools\VsDevCmd.bat""
+#+END_EXAMPLE
+
++ OpenSSL
+#+BEGIN_EXAMPLE
+cd OpenSSL (切换到 OpenSSL 目录下)
+
+perl Configure VC-WIN32 --prefix="C:\Local\usr\OpenSSL32" --openssldir="C:\Local\usr\OpenSSL32"
+{ VC-WIN32 | VC-WIN64A | VC-WIN64I | VC-CE } 可以选择的项目
+
+nmake clean
+
+nmake
+
+nmake test
+
+nmake install
+#+END_EXAMPLE
+
++ GmSSL
+#+BEGIN_EXAMPLE
+
+cd GmSSL (切换到 GmSSL 目录下)
+
+perl Configure VC-WIN32 no-deprecated no-base58 --prefix="C:\Local\usr\GmSSL32" --openssldir="C:\Local\usr\GmSSL32"
+(no-deprecated即不编译1.1.0废弃的函数)
+
+
+最新的版本已经优化了之前的一些bug，编译更加简洁了（去掉no-deprecated no-base58）
+
+mkdir _build
+cd _build
+perl ..\Configure VC-WIN32 --prefix="C:\Local\usr\GmSSL32"  --openssldir="C:\Local\usr\GmSSL32"
+
+nmake clean
+
+nmake
+
+nmake test
+
+nmake install
+
+issue:
+
+1、
+注意，注释采用/**/方式，否则perl脚本不能解析//
+或者有时会卡死
+
+error LNK2001: 无法解析的外部符号 BN_init
+注释掉 include\openssl\bn.h
+/*
+ # if OPENSSL_API_COMPAT < 0x10100000L
+ void BN_init(BIGNUM *a);
+ # endif
+*/
+
+error LNK2001: 无法解析的外部符号 CRYPTO_num_locks
+注释掉 include\openssl\crypto.h
+/*
+ #  if OPENSSL_API_COMPAT < 0x10100000L
+ int CRYPTO_num_locks(void);
+ #  else
+ #   define CRYPTO_num_locks()                    (1)
+ #  endif
+*/
+
+
+ssl\statem\statem_gmtls.c(1057): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+ssl\statem\statem_gmtls.c(1387): error C2449: 在文件范围内找到“{”(是否缺少函数头?)
+ssl\statem\statem_gmtls.c(1485): error C2059: 语法错误:“}”
+
+windows 下转换 ssl\statem\statem_gmtls.c 到UTF-8 with BOM编码
+
+
+* nm1C1.tmp : error LNK2001: 无法解析的外部符号 v_check
+
+注释掉 include\openssl\engine.h
+/*
+ * nm1C1.tmp : error LNK2001: 无法解析的外部符号 v_check
+ * modify by iaiting at 2018/05/26
+ * 
+# define IMPLEMENT_DYNAMIC_CHECK_FN() \
+        OPENSSL_EXPORT unsigned long v_check(unsigned long v); \
+        OPENSSL_EXPORT unsigned long v_check(unsigned long v) { \
+                if (v >= OSSL_DYNAMIC_OLDEST) return OSSL_DYNAMIC_VERSION; \
+                return 0; }
+*/
+
+
+libssl-1_1.def : error LNK2001: 无法解析的外部符号 GMTLS_client_method
+libssl-1_1.def : error LNK2001: 无法解析的外部符号 GMTLS_method
+libssl-1_1.def : error LNK2001: 无法解析的外部符号 GMTLS_server_method
+注释掉 include\openssl\ssl.h
+/*
+__owur const SSL_METHOD *DTLS_method(void); /* DTLS 1.0 and 1.2 */
+/*
+__owur const SSL_METHOD *DTLS_server_method(void); /* DTLS 1.0 and 1.2 */
+/*
+__owur const SSL_METHOD *DTLS_client_method(void); /* DTLS 1.0 and 1.2 */
+
+
+#ifndef OPENSSL_NO_GMTLS
+/*
+__owur const SSL_METHOD *GMTLS_method(void); /* GMTLSv1.1 */
+/*
+__owur const SSL_METHOD *GMTLS_server_method(void); /* GMTLSv1.1 */
+/*
+__owur const SSL_METHOD *GMTLS_client_method(void); /* GMTLSv1.1 */
+#endif
+
+注释掉 ssl/statem/statem_lib.c
+// {GMTLS_VERSION, gmtls_client_method, gmtls_server_method},
+
+
+nmA3DC.tmp : error LNK2001: 无法解析的外部符号 bind_engine
+注释掉 include/openssl/engine.h
+
+
+
+#+END_EXAMPLE
+
+
+
+**** 生成
+#+BEGIN_EXAMPLE
+头文件        : ./include/openssl
+
+动态库引用文件 : *.lib            
+
+动态库        : *.dll
+
+#+END_EXAMPLE
+
+
+
+
+
+
+*** Linux
+
+**** 编译
+
++ OpenSSL
+#+BEGIN_EXAMPLE
+./config --prefix=/usr/local/OpenSSL64 --openssldir=/usr/local/OpenSSL64
+
+make
+
+make test
+
+sudo make install
+#+END_EXAMPLE
+
++ GmSSL
+#+BEGIN_EXAMPLE
+./config --prefix=/usr/local/GmSSL64 --openssldir=/usr/local/GmSSL64
+
+make
+
+make test
+
+sudo make install
+#+END_EXAMPLE
+
+
+**** 修改环境变量
+#+BEGIN_EXAMPLE
+ldd /usr/local/OpenSSL64/lib/libssl.so
+➜  ~ ldd /usr/local/OpenSSL64/lib/libssl.so
+        linux-vdso.so.1 =>  (0x00007fff46c16000)
+        libcrypto.so.1.1 => not found
+export LD_LIBRARY_PATH=/usr/local/OpenSSL64/lib   //否则libcrypto.so.1.1 => not found
+#+END_EXAMPLE
+
+
+

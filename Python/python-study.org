@@ -1,0 +1,144 @@
+#+TITLE: Python-Study
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../style/my-org-worg.css"/>
+
+** 构建Python开发环境
+#+BEGIN_EXAMPLE
+
+由于python2和python3两者有较大的差别，且有些不兼容。为了系统中两个版本能完美的和谐共存，
+
+可以采用virtualenv或anaconda等方式管理任意多个版本python。以anaconda为列，由于anaconda
+
+本身已经包含了各个版本的python，所以无须再独立安装python了。
+
+#+END_EXAMPLE
+
+
+*** Windows
++ 下载并安装anaconda
+#+BEGIN_EXAMPLE
+从清大大学的镜像网站：https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/ 下载适合的
+
+windows版本 xAnaconda3-5.1.0-Windows-x86_64.exe
+
+Install for All Users ->设置好预安装的路径 -> 设置好高级选项
+
+(勾选1 Add Anaconda to，去除2 Register Anaconda as) ->
+
+一路回车法
+
+where conda      (查看conda的安装位置)
+
+conda --version  (查看conda的版本)
+#+END_EXAMPLE
+
+
++ 卸载anaconda
+#+BEGIN_EXAMPLE
+控制面板卸载程序，python(Anaconda)
+#+END_EXAMPLE
+
+
+*** Linux
++ 下载并安装anacoda
+#+BEGIN_EXAMPLE
+从清大大学的镜像网站：https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/ 下载适合的版本
+Anaconda3-4.2.0-Linux-x86_64.sh
+
+执行shell脚本安装
+bash Anaconda3-4.2.0-Linux-x86_64.sh 一路回车法
+
+which conda      (查看conda的安装位置)
+
+conda --version  (查看conda的版本)
+#+END_EXAMPLE
+
+
++ 卸载anaconda
+#+BEGIN_EXAMPLE
+直接删除即可
+
+rm -rf anaconda
+#+END_EXAMPLE
+
+
+*** conda常用命令
+
++ 设置conda仓储的镜像
+#+BEGIN_EXAMPLE
+可以加速三方库下载的速度
+
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --set show_channel_urls yes
+
+
+最后生成的配置文件在 C:\Users\lescpsn\.condarc 即也可以直接编辑该文件
+
+设置好镜像后升级下conda
+
+conda update conda          (升级conda)
+#+END_EXAMPLE
+
+
++ 列出当前系统中的所有python环境
+#+BEGIN_EXAMPLE
+conda info -e 
+#+END_EXAMPLE
+
+
++ 创建指定版本指定位数的python虚拟环境
+#+BEGIN_EXAMPLE
+MacOS暂且不支持32位
+
+set CONDA_FORCE_32BIT=1 (win)
+CONDA_FORCE_32BIT=1 (linux)
+conda create -n py370env-x86 python=3.7.0
+#+END_EXAMPLE
+
+
++ 创建指定版本的python虚拟环境(以默认python的位数创建)
+#+BEGIN_EXAMPLE
+set CONDA_FORCE_32BIT=   (win切换默认) 
+unset CONDA_FORCE_32BIT   (linux切换默认) 
+conda create -n py370env python=3.7.0
+(创建一个指定版本python3.7.0的新环境py370env，并且只包含python的基本模块。)
+
+conda create -n py34env python=3.4 (注意 prelude的anaconda不支持3.6，只能支持到3.4版本)
+#+END_EXAMPLE
+
+
++ 激活指定版本的python虚拟环境
+#+BEGIN_EXAMPLE
+conda activate py362env            (windows下激活某个环境)
+conda deactivate                   (windows退出某个环境)
+
+source activate py362env     (linux下激活某个环境)
+source deactivate            (linux退出某个环境)
+#+END_EXAMPLE
+
+
+
++ 删除指定版本的python虚拟环境
+#+BEGIN_EXAMPLE
+conda remove -n py362env  --all 
+#+END_EXAMPLE
+
+
++ 查看conda配置
+#+BEGIN_EXAMPLE
+conda config --show
+#+END_EXAMPLE
+
+
+
++ 查找模块
+#+BEGIN_EXAMPLE
+conda search 模块名
+#+END_EXAMPLE
+
++ 安装模块
+#+BEGIN_EXAMPLE
+conda install 模块名
+#+END_EXAMPLE
+
+

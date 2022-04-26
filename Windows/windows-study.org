@@ -1,0 +1,126 @@
+#+TITLE: Windows-Study
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../style/my-org-worg.css"/>
+
+
+** Windows系统常用设置
+
++ 键盘映射
+#+BEGIN_EXAMPLE
+win + r -> regedit 进入注册表
+
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layout
+
+新建二进制项 Scancode Map
+00 00 00 00 00 00 00 00
+03 00 00 00 3A 00 01 00
+01 00 3A 00 1D E0 38 E0
+38 E0 00 00 00 00 00 00
+#+END_EXAMPLE
+
+
++ 修改C:\用户显示为C:\Users
+#+BEGIN_EXAMPLE
+显示系统中的隐藏文件，并将
+
+C:\Users\desktop.ini 改名为 C:\Users\bak.desktop.ini
+
+或删除也可
+
+#+END_EXAMPLE
+
+
+
+** Issue
++ exe文件不能正常显示图标
+#+BEGIN_EXAMPLE
+方法1：
+taskkill /im explorer.exe /f	
+cd /d %userprofile%\appdata\local
+del IconCache.db /a
+start explorer.exe
+
+方法2：
+cd C:\Users\lescpsn\AppData\Local
+删除 IconCache.db
+taskkill /im explorer.exe /f	
+start explorer.exe
+#+END_EXAMPLE
+
+
++ 统升级完后，很多系统的应用打不开
+#+BEGIN_EXAMPLE
+win + x -> 命令提示符（管理员）-> PowerShell ->
+
+Get-AppXPackage -AllUsers | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}
+#+END_EXAMPLE
+
+** Windows下常用开发软件
+
+
+** Source Insight
+#+BEGIN_EXAMPLE
+百度 source insight 中文版 下载安装
+http://www.liangchan.net/soft/softdown.asp?softid=3947
+#+END_EXAMPLE
+
+
+** Cygwin For Windows
+#+BEGIN_EXAMPLE
+不推荐使用cygwin，体验效果非常不好，30秒之内轻松将其搞死，还是直接上VMware虚拟机干净利索
+#+END_EXAMPLE
+** 下载Cygwin
+#+BEGIN_EXAMPLE
+从 https://cygwin.com 上下载 setup-x86.exe 或 setup-x86_64.exe。
+#+END_EXAMPLE
+
+
+** 安装Cygwin
+#+BEGIN_EXAMPLE
+选择Install from Internet, 在”User URL”处输入以下地址
+
+http://mirrors.tuna.tsinghua.edu.cn/cygwin/  (清华大学的镜像)
+
+点击”Add”按钮, 然后选中”http://mirrors.tuna.tsinghua.edu.cn”, 点击”下一步”进行安装。
+#+END_EXAMPLE
+
+
+** 卸载Cygwin
+#+BEGIN_EXAMPLE
+点击最初的安装程序，选择uninstall
+#+END_EXAMPLE
+
+** 安装常用工具
+#+BEGIN_EXAMPLE
+curl,zsh
+#+END_EXAMPLE
+
+
+** 安装OpenSsh
++ OpenSsh的安装
+#+BEGIN_EXAMPLE
+搜索openss，net包中选择 openssh, openssl两个模块
+#+END_EXAMPLE
+
++ OpenSsh的配置
+#+BEGIN_EXAMPLE
+右键以管理员运行cygwin
+
+ssh-host-config
+
+ Query: Should StrictModes be used? (yes/no) no
+
+ Query: Should privilege separation be used? (yes/no) no
+
+ Query: Do you want to install sshd as a service?
+ Query: (Say "no" if it is already installed as a service) (yes/no) yes
+ Query: Enter the value of CYGWIN for the daemon: []
+
+
+ Query: Do you want to use a different name? (yes/no) no
+ Query: Create new privileged user account 'cyg_server'? (yes/no) yes
+
+
+ Query: Please enter the password: 输入密码
+ Query: Reenter: 确认密码
+ 
+#+END_EXAMPLE

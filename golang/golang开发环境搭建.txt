@@ -1,0 +1,56 @@
+                Golang开发环境搭建
+1 windows下的Golang开发环境搭建
+
+
+
+
+
+3. 安装Golang常用工具
+   1 x/tools 安装
+     golang.org/x/tools = github.com/golang/tools
+     1 go get -v -u -x github.com/golang/tools
+       mkdir golang.org/x
+       cp  github.com/golang/tools golang.org/x/tools
+
+   go install golang.org/x/tools/cmd/goimports
+
+
+
+
+
+   lint: 检查代码规范性 go get -v -u -x github.com/golang/lint 出问题（需要golang.org/x/tools）
+   下载，手工安装
+   git clone  https://github.com/golang/lint
+   go install github.com/golang/lint(这个没有用)
+   go install github.com/golang/lint/golint(这个有用)
+
+
+   go get -v -u -x github.com/golang/lint/golint
+
+   dlv: 调试插件
+
+   go get -v -u github.com/peterh/liner
+   go get -u -v -x github.com/derekparker/delve/cmd/dlv
+
+   git clone https://github.com/derekparker/delve
+   go install github.com/derekparker/delve/cmd/dlv
+
+
+
+
+   go get -u -v -x github.com/lukehoban/go-outline
+
+   go get -u -v -x github.com/alecthomas/gometalinter
+
+
+
+go get gopkg.in/yaml.v1 -->https://github.com/go-yaml/yaml
+go get gopkg.in/pg.v4"  -->go get -u -v -x github.com/go-pg/pg
+
+
+go get -u -v -x gopkg.in/robfig/cron.v2
+go get -u -v -x github.com/go-pg/robfig/cron.v2
+
+
+
+
