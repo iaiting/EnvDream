@@ -7,16 +7,23 @@
 #                 每种系统可能启动配置文件有略微的区别
 #                 Linux(~/.profile), Mac/Msys2(~/.bash_profile)
 #
-#                 $ vim ~/.profile
-#                 . .myalias
-#                 $ source ~/.profile
+#                 $ vim ~/.profile (Linux系统中)
+#                   或者
+#                 $ vim ~/.bash_profile (Mac/Msys2系统中)
+#                  . myalias
+#                 $ source ~/.profile 或者 source ~/.bash_profile
 #
 # ==============================================================================
 
 # 定义操作系统类型
 OS_TYPE=`uname`
 
-# 设置 ls 相关别名
+# ==============================================================================
+#
+# 1、设置 ls 相关别名
+# Mac系统与Linux&Msys2有细微不同
+#
+# ==============================================================================
 if [ "X${OS_TYPE}" != "XDarwin" ]; then
    alias ls='ls --color=auto'
    alias ll='ls -al --color=auto'
