@@ -6,36 +6,36 @@
 
 **** 安装MSYS2
 #+BEGIN_EXAMPLE
-1、 官网 http://www.msys2.org/ 下载对应平台的最新安装包，msys2-x86_64-20161025.exe
+1、 官网 http://www.msys2.org/ 下载对应平台的最新安装包，msys2-x86_64-20220319.exe
 
-设置好安装路径，一路回车。安装结束后，开始菜单中会创建MSYS2 MSYS， MSYS2 MinGW 32-bit，
+设置好安装路径(如：D:\msys64)，一路回车。安装结束后，开始菜单中会创建MSYS2 MSYS， MSYS2 MinGW 32-bit，
 
 MSYS2 MinGW 64-bit 三种快捷方式
 
-2、 配置MSYS2
+2、安装完成后点击完成，执行运行MSYS2 MSYS并升级系统
 
-添加中科大镜像数据源
-C:\msys64\etc\pacman.d\mirrorlist.mingw32
+pacman -Syu  升级结束后，关闭终端，再次打开终端，再次输入
+
+pacman -Syu 一直循环，直到再没有更新的动作了
+
+
+3、 配置MSYS2数据源镜像，方便后续更新软件包的速度
+（可以暂且不用做了，新版本中新增的mirrorlist.clang32， mirrorlist.clang64，mirrorlist.msys，mirrorlist.ucrt64等文件）
+
+到MSYS2安装路径etc\pacman.d目录下添加中科大镜像数据源
+如：D:\msys64\etc\pacman.d\mirrorlist.mingw32
 Server = http://mirrors.ustc.edu.cn/msys2/mingw/i686
 
-C:\msys64\etc\pacman.d\mirrorlist.mingw64
+如：D:\msys64\etc\pacman.d\mirrorlist.mingw64
 Server = http://mirrors.ustc.edu.cn/msys2/mingw/x86_64
 
-C:\msys64\etc\pacman.d\mirrorlist.msys
+如：D:\msys64\etc\pacman.d\mirrorlist.msys
 Server = http://mirrors.ustc.edu.cn/msys2/msys/$arch
 
-
-3、 升级系统
-pacman -Syuu  升级结束后，关闭终端，再次打开终端，再次输入
-
-pacman -Syuu 一直循环，直到再没有更新的动作了
 #+END_EXAMPLE
 
 
-**** 建立MSYS2桌面快捷方式
-#+BEGIN_EXAMPLE
-C:\msys64\usr\bin\mintty.exe 发送到桌面快捷方式
-#+END_EXAMPLE
+
 
 
 **** 配置 MSYS2 环境
@@ -46,7 +46,32 @@ C:\msys64\home\用户名 该目录可以当作类似Linux用户的主目录，�
 #+END_EXAMPLE
 
 
-**** 卸载MSYS2
+**** 建立MSYS2桌面快捷方式 （新版本中已经去除，没用了）
+#+BEGIN_EXAMPLE
+C:\msys64\usr\bin\mintty.exe 发送到桌面快捷方式
+#+END_EXAMPLE
+
+
+**** 卸载MSYS2 （新版本中已经去除，没用了）
 #+BEGIN_EXAMPLE
 双击 C:\Local\msys64\maintenancetool.exe
+#+END_EXAMPLE
+
+
+*** 个性化设置
+**** 字体设置
+#+BEGIN_EXAMPLE
+左上角右键 -> Options -> Text -> 
+#+END_EXAMPLE
+
+
+*** 安装相关软件
+**** 安装git
+#+BEGIN_EXAMPLE
+pacman -S git
+#+END_EXAMPLE
+
+**** 安装vim
+#+BEGIN_EXAMPLE
+pacman -S vim
 #+END_EXAMPLE

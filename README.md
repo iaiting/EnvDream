@@ -7,8 +7,10 @@
 
 ```
 
-### bash
-    shell终端配置
+### 2、bash终端配置
+```
+https://github.com/iaiting/EnvDream/tree/main/bash
+```
 
 ### emacs
     emacs配置
