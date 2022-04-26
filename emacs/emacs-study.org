@@ -1,64 +1,27 @@
 #+TITLE: emacs-study历程
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../style/my-org-worg.css"/>
-* emacs安装
-** 1、最简单的emacs配置
-#+BEGIN_EXAMPLE
-cp init.el  ~/.emacs.d
-#+END_EXAMPLE
 
-   
+* emacs安装
 ** windows 
 + 下载安装包
 #+BEGIN_EXAMPLE
 
-1. spacemacs推荐的网站 https://sourceforge.net/projects/emacsbinw64/files/release/ 下载对应的emacs版本 (推荐)
+1、去emacs官网https://ftp.gnu.org/gnu/emacs/windows/
+   下载绿色emacs-27.2-x86_64.zip，下载连接为
+   https://ftp.gnu.org/gnu/emacs/windows/emacs-27/
+
+
+2. spacemacs推荐的网站 https://sourceforge.net/projects/emacsbinw64/files/release/ 下载对应的emacs版本 (推荐)
     github上关联的位置为 https://github.com/zklhp/emacs-w64/releases
-    选择64位的 emacs-w64-25.3-O2-with-modules.7z 版本
-
-2. gnu网站http://ftp.gnu.org/gnu/emacs/windows下载windows对应的emacs版本
-
-    http://ftp.gnu.org/gnu/emacs/windows/emacs-25.1-2-x86_64-w64-mingw32.zip
+    选择64位的 emacs-w64-25.3-O2-with-modules.7z 版本，最新版本的spacemacs好像已经优化成可以支持官网的emacs版本
 
 #+END_EXAMPLE
 
 + 安装
 #+BEGIN_EXAMPLE
-emacs-w64-25.3-O2-with-modules.7z 为绿色版本
+emacs-27.2-x86_64.zip 为绿色版本
 
-直接解压到自己规划好的目录并修改为自己喜欢的名字即可以使用，如C:\Local\emacs\emacs-w64-25.3-O2-with-modules
-#+END_EXAMPLE
-
-+ 配置PATH环境变量
-#+BEGIN_EXAMPLE
-如：将emacs安装目录的bin目录C:\Local\emacs\emacs-w64-25.3-O2-with-modules\bin添加到PATH环境变量中
-#+END_EXAMPLE
-
-
-+ 规划emacs配置目录.emacs.d (不操作该步骤，直接采用默认的路径了)
-#+BEGIN_EXAMPLE
-编辑C:\Users\carhj\AppData\Roaming\.emacs.d\init.el文件,且保证C:\Users\carhj\AppData\Roaming\
-
-目录中不能有.emacs文件
-
-(setenv "HOME" "D:/Local/emacs/")
-;;(setenv "PATH" "E:/Local/emacs/")
-(setq default-directory "E:/Projects/lescpsn/")
-(load-file "D:/Local/emacs/.emacs.d/init.el")
-#+END_EXAMPLE
-
-+ emacs启动 
-#+BEGIN_EXAMPLE
-创建runemacs.exe的快捷方式到桌面，右键 --> 属性 --> 起始位置
-
-删除"D:/Local/emacs/.emacs.d/init.el"文件，恢复到初始状态 git checkout -- init.el，再次启动emacs (该问题和上一步有关，默认路径就不会有问题的了)
-#+END_EXAMPLE
-
-
-+ issue
-#+BEGIN_EXAMPLE
-emacs25以上版本在win10上可能会很卡，需要更换默认font字体，具体哪种字体自行尝试。
-
-至少Source Code Pro这种字体应该是没有问题的
+直接解压到自己规划好的目录并修改为自己喜欢的名字即可以使用，如 D:\Local\emacs\emacs-27.2-x86_64
 #+END_EXAMPLE
 
 
@@ -74,6 +37,31 @@ pacman -S emacs
 #+END_EXAMPLE
 
 
+
+*** Putty终端工具
+#+BEGIN_VERSE
+当需要从Windows远程连接到Linux主机上时, SecureCRT, Xshell中在运行emacs，或多或少都有些问题
+
+Putty相对于其他终端工具运行emacs则更加优秀
+#+END_VERSE
+
+*** 安装putty
+#+BEGIN_EXAMPLE
+
+官网 https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html 下载便携版，直接解压就可以使用
+
+最新版本为0.7
+
+#+END_EXAMPLE
+
+*** 配置putty主题
+#+BEGIN_EXAMPLE
+
+导入putty的颜色主题，igvita-desert.reg 和 igvita-light.reg，双击*.reg文件即可。
+
+#+END_EXAMPLE
+
+
 ** 相关工具
 + etags
 #+BEGIN_EXAMPLE
@@ -85,50 +73,24 @@ TAGS用以工程中代码跳转
 
 
 
-
-* Putty终端工具
-#+BEGIN_VERSE
-当需要从Windows远程连接到Linux主机上时, SecureCRT, Xshell中在运行emacs，或多或少都有些问题
-
-Putty相对于其他终端工具运行emacs则更加优秀
-#+END_VERSE
-
-** 安装putty
+* 最简单的emacs配置
 #+BEGIN_EXAMPLE
-
-官网 https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html 下载便携版，直接解压就可以使用
-
-最新版本为0.7
-
+将实现配置好的init.el拷贝到~/.emacs.d目录下
+cp init.el  ~/.emacs.d
 #+END_EXAMPLE
 
-** 配置putty主题
-#+BEGIN_EXAMPLE
-
-导入putty的颜色主题，igvita-desert.reg 和 igvita-light.reg，双击*.reg文件即可。
-
-#+END_EXAMPLE
-
-
-
-* spacemacs安装
+* spacemacs配置
 ** windows
 + 安装spacemacs
 #+BEGIN_EXAMPLE
-直接从git上下载代码到emacs的家目录中，并取名为.emacs.d，
+直接从github上下载代码到emacs的develop分支到家目录中，并取名为.emacs.d，
 
 如果之前运行过emacs，且windows的家目录下有.emacs文件和.emacs.d目录，请删除掉
 
 windows的emacs家目录一般为C:\Users\用户名\AppData\Roaming\, 
 
 AppData默认为隐藏目录，请取消其隐藏属性
-
-git clone https://github.com/syl20bnr/spacemacs.git C:\Users\carhj\AppData\Roaming\.emacs.d
-
-拷贝.spacemacs文件到C:\Users\carhj\AppData\Roaming\目录下
-
-拷贝elpa目录到C:\Users\carhj\AppData\Roaming\.emacs.d\目录下
-
+git clone -b develop https://github.com/syl20bnr/spacemacs C:\Users\admin\AppData\Roaming\.emacs.d
 #+END_EXAMPLE
 
 + 启动emacs
@@ -140,12 +102,11 @@ spacemacs采用.emacs.d目录来控制emacs了，无需.emacs文件了
 
 2 选择standard(spacemacs)
 
-3 选择full-featured(helm)
+3 第一次启动后，然后关闭emacs
 
-4 第一次启动后，然后关闭emacs
-
-5 HOME目录下会自动生成C:\Users\carhj\AppData\Roaming\.spacemacs这个文件
+4 HOME目录下会自动生成C:\Users\admin\AppData\Roaming\.spacemacs这个文件
 #+END_EXAMPLE
+
 
 + .spacemacs文件配置
 #+BEGIN_EXAMPLE
@@ -166,6 +127,13 @@ dotspacemacs-elpa-timeout 60
 
 + issue
 #+BEGIN_EXAMPLE
+0.emacs25以上版本在win10上可能会很卡，需要更换默认font字体，具体哪种字体自行尝试。
+
+至少Source Code Pro这种字体应该是没有问题的
+#+END_EXAMPLE
+
+
+#+BEGIN_EXAMPLE
 1 evil-unimpaired安装不了
   github网络问题，evil-unimpaire不容易装上,手工下载melpa后,放入到emacs.d\.cache\quelpa\目录下,
   重启emacs
@@ -185,8 +153,7 @@ npm install -g tern
 直接从git上下载代码到用户的家目录中，并取名为.emacs.d，
 
 如果之前运行过emacs，且用户家目录下有.emacs文件和.emacs.d目录的，请删除掉
-
-git clone https://github.com/syl20bnr/spacemacs.git .emacs.d
+git clone -b develop https://github.com/syl20bnr/spacemacs ~/.emacs.d
 
 首次运行emacs让其生成.spacemacs文件 修改.spacemacs文件的插件数据源
 #+END_EXAMPLE
@@ -204,7 +171,6 @@ fish shell
 vim ~/.config/fish/config.fish
 set -x TERM xterm-256color 
 #+END_EXAMPLE
-
 
 
 ** .spacemacs相关配置
@@ -236,9 +202,6 @@ dotspacemacs-elpa-https nil
 dotspacemacs-elpa-timeout 60
 
 #+END_EXAMPLE
-
-
-
 
 
 + 设置字体大小 dotspacemacs-default-font
