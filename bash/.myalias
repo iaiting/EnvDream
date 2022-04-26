@@ -1,0 +1,102 @@
+# ==============================================================================
+#
+# Generate Data : 2018-03-28
+#
+# Desciption    : Mac/Linux/Msys2 bash定制环境
+#                 将.myalias文件复制到~/家目录下，并将该文件包含到bash的启动配置文件中
+#                 每种系统可能启动配置文件有略微的区别
+#                 Linux(~/.profile), Mac/Msys2(~/.bash_profile)
+#
+#                 $ vim ~/.profile
+#                 . .myalias
+#                 $ source ~/.profile
+#
+# ==============================================================================
+
+# 定义操作系统类型
+OS_TYPE=`uname`
+
+# 设置 ls 相关别名
+if [ "X${OS_TYPE}" != "XDarwin" ]; then
+   alias ls='ls --color=auto'
+   alias ll='ls -al --color=auto'
+   alias la='ls -al --color=auto'
+   alias l='ls -al --color=auto'
+else
+   alias ls='ls'
+   alias ll='ls -al'
+   alias la='ls -al'
+   alias l='ls -al'
+fi
+
+
+# 设置 grep 相关别名
+alias grep='grep --color=auto'
+
+
+# 设置 git 相关别名
+alias gits='git status'
+alias gitd='git diff'
+alias gitp='git pull'
+alias gitpl='git pull'
+alias gitpp='git push'
+alias gitps='git push'
+alias gitacp='git add --all .; git commit -m "(*) 优化工程"; git push'
+
+
+# 设置 emasc 别名
+alias em='emacs'
+alias en='emacs -nw'
+alias vi='emacs'
+
+
+# 设置 cd 切换目录相关别名
+if [ "X${OS_TYPE}" = "XDarwin" -o "X${OS_TYPE}" = "XLinux" ]; then
+    alias cds='cd ~/Projects/src'
+else
+    alias cds='cd /D/Projects/src'
+    alias cd192='cd /D/Projects/src/192.168.1.120'
+fi
+
+# 中文乱码
+function win() {
+	$@ |iconv -f gbk -t utf-8
+}
+
+if [ "X${OS_TYPE}" != "XDarwin" -a "X${OS_TYPE}" != "XLinux" ]; then
+	alias ping="win ping"
+	alias netstat="win netstat"
+	alias nslookup="win nslookup"
+	alias ipconfig="win ipconfig"
+fi
+
+
+# export all_proxy=socks5://127.0.0.1:10808
+
+# git status for bash
+#
+function git_branch {
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || return;
+    echo "("${ref#refs/heads/}") ";
+}
+
+function parse_git_dirty {
+    local git_status=$(git status 2> /dev/null | tail -n1) || $(git status 2> /dev/null | head -n 2 | tail -n1);
+    if [[ "$git_status" != "" ]]; then
+        local git_now; # 标示
+        if [[ "$git_status" =~ nothing\ to\ commit || "$git_status" =~  Your\ branch\ is\ up\-to\-date\ with ]]; then
+            git_now="=";
+        elif [[ "$git_status" =~ Changes\ not\ staged || "$git_status" =~ no\ changes\ added ]]; then
+            git_now='~';
+        elif [[ "$git_status" =~ Changes\ to\ be\ committed ]]; then #Changes to be committed
+            git_now='*';
+        elif [[ "$git_status" =~ Untracked\ files ]]; then
+            git_now="+";
+        elif [[ "$git_status" =~ Your\ branch\ is\ ahead ]]; then
+            git_now="#";
+        fi
+        echo "${git_now}";
+    fi
+}
+
+PS1="[\[\e[1;35m\]\u\[\e[1;33m\]@\[\e[1;32m\]\w\[\e[0m\]]\[\e[0m\] \[\e[1;36m\]\$(git_branch)\[\033[0;31m\]\$(parse_git_dirty)\[\033[0m\]\\$ "
