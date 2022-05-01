@@ -142,8 +142,8 @@ sudo vim /opt/gitlab/embedded/service/gitlab-rails/config/gitlab.yml
 host: 192.168.3.159
 
 2 修改时区
-sudo vim /opt/gitlab/embedded/service/gitlab-rails/config/gitlab.yml
-time_zone: 'Beijing'
+sudo vim /etc/gitlab/gitlab.rb
+gitlab_rails['time_zone'] = 'Asia/Shanghai'
 
 3 重新载入配置并重启服务
 sudo gitlab-ctl reconfigure
